@@ -12,21 +12,44 @@ pages = ["Contexte du projet", "Exploration des données", "Analyse de données"
 
 page = st.sidebar.radio("Aller vers la page :", pages)
 
-if page == pages[0] :
+
+if page == pages[0]:
 
     # Streamlit app
     st.title("Réussite au baccalauréat selon l’origine sociale")
 
     # Choix des colonnes
-    colonne_x = st.selectbox("Axe X", df.columns, index=1)
-    colonne_y = st.selectbox("Axe Y", df.columns, index=3)
-    colonne_ventilation = st.selectbox("Ventiler les séries", df.columns, index=2)
+    df_dropped = df.drop(columns=["num_ligne"])
+    colonne_x = "Année"
+    colonne_y = st.selectbox("Axe Y (Figure 1)", df_dropped.columns, index = 2)
+    colonne_ventilation = "Origine sociale"
 
-    df = df.sort_values(by=[colonne_x, colonne_y])
-
-    # Créer le graphique
-    fig = px.line(df,
-                  x=colonne_x, y=colonne_y, color=colonne_ventilation, width=1000, markers=True)
+    df_dropped = df_dropped.sort_values(by=[colonne_x, colonne_y])
+    fig = px.line(df_dropped, x=colonne_x, y=colonne_y, color=colonne_ventilation, width=1000, markers=True,
+                  title="Figure 1 : Evolution des réussites au baccalaureat dans le temps")
 
     # Afficher le graphique
     st.plotly_chart(fig)
+
+    if st.checkbox("Interprétation figure 1"):
+        interpretation = None
+        st.write("Interprétation figure 1")
+
+
+elif page == pages[1]:
+
+    st.title("Réussite au baccalauréat selon l’origine sociale")
+
+    # Pourcentage moyen de réussite au baccalauréat pour chaque origine sociale
+    colonne_x = "Origine sociale"
+    colonne_y = "Pourcentage d'admis au baccalauréat"
+    mean_success = df.groupby(colonne_x)[colonne_y].mean().reset_index()
+    fig2 = px.bar(mean_success,
+                  x=colonne_x, y=colonne_y, color=colonne_x, width=1000,
+                  title="Figure 2 : Pourcentage moyen de réussite au baccalauréat pour chaque origine sociale")
+
+    # Afficher le graphique
+    st.plotly_chart(fig2)
+
+    if st.checkbox("Interprétation figure 2"):
+        st.write("Interprétation figure 2")
