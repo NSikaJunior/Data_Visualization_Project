@@ -43,7 +43,7 @@ if page == pages[0]:
     st.write("""## Introduction""")
 
     # open method used to open different extension image file
-    intro_im = Image.open(r"img\dataviz.jpg")
+    intro_im = Image.open(r"./img/dataviz.jpg")
     st.image(intro_im)
 
     st.write("Ce projet s'intéresse à l'influence de l'origine sociale sur la réussite"
