@@ -3,3 +3,9 @@ plotly
 streamlit
 seaborn
 matplotlib
+scikit-learn
+tensorflow
+keras
+keras-tuner
+multiprocess
+pillow
