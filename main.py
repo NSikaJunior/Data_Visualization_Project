@@ -182,7 +182,7 @@ elif page == pages[5]:
 
     plot_evolution(df_prediction2, 3, {}, interpretation=False)
 
-else:
+elif page == pages[6]:
 
     st.title("Conclusion")
 
